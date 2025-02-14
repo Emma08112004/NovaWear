@@ -1,17 +1,29 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+{% extends 'base.html.twig' %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
+{% block body %}
+    <header>
+        <div class="logo">
+            <img src="{{ asset('images/novaWear-logo.png') }}" alt="NOVAWEAR">
+        </div>
+        <nav>
+        </nav>
+        <div class="search-container">
+            <input type="text" placeholder="Rechercher">
+            <button type="submit"><img src="{{ asset('images/Search-icon.jpg') }}" alt="Rechercher"></button>
+        </div>
+        <div class="icons">
+            <img src="{{ asset('images/user.jpg') }}" alt="User">
+            <img src="{{ asset('images/heart-icon.webp') }}" alt="Favorites">
+            <img src="{{ asset('images/Basket.png') }}" alt="Basket">
+        </div>
+    </header>
+    
+    <footer>
+        <p>&copy; 2025 Novawear - Tous droits réservés.</p>
+        <nav>
+            <a href="{{ path('home') }}">Accueil</a>
+            <a href="{{ path('femmes') }}">Femmes</a>
+            <a href="{{ path('hommes') }}">Hommes</a>
+        </nav>
+    </footer>
+{% endblock %}
