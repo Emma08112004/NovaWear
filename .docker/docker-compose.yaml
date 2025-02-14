@@ -1,0 +1,82 @@
+x-orbstack:
+  project: novaWear
+
+services:
+  db:
+    image: mysql:8.0
+    platform: linux/arm64
+    container_name: novaWear_db
+    volumes:
+      - "novaWear_db_data:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - novaWear_network
+
+  adminer:
+    image: adminer
+    platform: linux/arm64
+    container_name: novaWear_adminer
+    environment:
+      ADMINER_DEFAULT_DB_DRIVER: mysql
+      ADMINER_DEFAULT_DB_HOST: novaWear_db
+      ADMINER_DEFAULT_DB_NAME: ${MYSQL_DATABASE}
+      ADMINER_DEFAULT_SERVER: novaWear_db
+    restart: always
+    ports:
+      - "127.0.0.1:8081:8080"
+    depends_on:
+      - db
+    networks:
+      - novaWear_network
+
+  php:
+    container_name: novaWear_php
+    platform: linux/arm64
+    build:
+      context: ./php
+      args:
+        TIMEZONE: ${TIMEZONE}
+    volumes:
+      - ../:/var/www/novaWear:cached
+    networks:
+      - novaWear_network
+    ports:
+      - "9003:9003"
+
+  nginx:
+    container_name: novaWear_nginx
+    platform: linux/arm64
+    build:
+      context: ./nginx
+    volumes:
+      - ../:/var/www/novaWear:cached
+    ports:
+      - "80:80"
+    networks:
+      - novaWear_network
+    env_file:
+      - .env.nginx
+    depends_on:
+      - php
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: novaWear_mailhog
+    ports:
+      - "2525:1025"
+      - "8090:8025"
+    networks:
+      - novaWear_network
+
+volumes:
+  novaWear_db_data:
+
+networks:
+  novaWear_network:
