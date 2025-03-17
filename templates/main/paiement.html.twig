@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement - NovaWear{% endblock %}
+
+{% block body %}
+    <h1>Paiement</h1>
+    <form action="{{ path('paiement') }}" method="post">
+        <label for="card">Numéro de carte :</label>
+        <input type="text" id="card" name="card" placeholder="**** **** **** ****">
+
+        <label for="expiration">Date d'expiration :</label>
+        <input type="text" id="expiration" name="expiration" placeholder="MM/YY">
+
+        <label for="cvv">CVV :</label>
+        <input type="text" id="cvv" name="cvv" placeholder="123">
+
+        <button type="submit">Payer</button>
+    </form>
+{% endblock %}
