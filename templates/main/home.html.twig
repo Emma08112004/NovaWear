@@ -3,7 +3,18 @@
 {% block title %}Accueil - NovaWear{% endblock %}
 
 {% block body %}
-    <h1>Bienvenue sur NovaWear</h1>
-    <a href="{{ path('inscription') }}">S'inscrire</a>
-    <a href="{{ path('connexion') }}">Se connecter</a>
+    <div class="home-container">
+        <h1 class="title"></h1>
+
+        <div class="categories">
+            <div class="category">
+                <img src="{{ asset('images/femme.png') }}" alt="Mode Femme">
+                <a href="#" class="category-btn">FEMMES</a>
+            </div>
+            <div class="category">
+                <img src="{{ asset('images/homme.png') }}" alt="Mode Homme">
+                <a href="#" class="category-btn">HOMMES</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

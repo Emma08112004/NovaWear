@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\FavoritesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
+use App\Entity\Product;
 
 #[ORM\Entity(repositoryClass: FavoritesRepository::class)]
 class Favorites
@@ -13,11 +15,11 @@ class Favorites
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "favorites")]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $user = null;
+    private ?User $user = null;
 
-    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: "favorites")]
+    #[ORM\ManyToOne(targetEntity: Product::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 

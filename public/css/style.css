@@ -1,156 +1,196 @@
-/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jaro&display=swap');
 
-/* Général */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Anton', sans-serif;
     margin: 0;
     padding: 0;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.search-container input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-}
-
-.icons span {
-    font-size: 20px;
-    margin: 0 10px;
-}
-
-/* Accueil */
-.home-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-}
-
-.gender-choice {
-    display: flex;
-    gap: 30px;
-}
-
-.gender-button {
-    background-color: #000;
-    color: #fff;
-    padding: 15px 30px;
-    text-decoration: none;
-    font-size: 18px;
-    border-radius: 10px;
-}
-
-/* Page produit */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
-
-.product-card {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
     text-align: center;
 }
 
-.product-card img {
-    width: 100%;
-    border-radius: 10px;
+/* Style du titre NovaWear */
+.novawear-title {
+    font-family: 'Jaro', sans-serif;
+    font-size: 55px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #004d61;
+    text-decoration: none;
+    margin-right: 20px;
+    transition: color 0.3s ease;
 }
 
-.favorite-button {
+.novawear-title:hover {
+    color: #002b3a;
+}
+
+/* Barre de navigation */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Barre de recherche */
+.search-bar {
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    border-radius: 20px;
+    padding: 8px 12px;
+    border: 2px solid #ccc;
+}
+
+.search-bar button {
     background: none;
     border: none;
-    font-size: 20px;
     cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
 }
 
-/* Formulaires */
-.form-container {
-    max-width: 400px;
-    margin: 50px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.form-container input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.form-container button {
-    background-color: #000;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-}
-
-/* Panier */
-.cart {
-    max-width: 600px;
-    margin: 50px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.cart-item {
+/* Icônes utilisateur */
+.navbar-icons {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #ccc;
+    font-size: 22px;
+    gap: 15px;
 }
 
-.cart-item img {
-    width: 50px;
-    border-radius: 5px;
-}
-
-/* Récapitulatif */
-table {
-    width: 80%;
-    margin: 20px auto;
-    border-collapse: collapse;
-}
-
-table th, table td {
-    border: 1px solid #ccc;
-    padding: 10px;
+/* Conteneur du formulaire */
+.inscription-container {
+    width: 70%;
+    margin: auto;
+    background-color: #E0E0E0;
+    border-radius: 30px;
+    padding: 40px;
     text-align: center;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
 }
 
-table th {
-    background-color: #000;
-    color: #fff;
+/* Titre INSCRIPTION */
+.inscription-title {
+    font-family: 'Jaro', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #004d61;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
 }
 
-/* Boutons */
-button, .gender-button, .form-container button {
-    transition: background 0.3s ease;
+/* Style des champs */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    text-align: left;
 }
 
-button:hover, .gender-button:hover, .form-container button:hover {
-    background-color: #444;
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 20px;
+    background-color: #d9d9d9;
+    font-size: 16px;
+    box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Enlever la bordure bleue par défaut */
+.form-group input:focus {
+    outline: none;
+    border: 2px solid #004d61;
+    background-color: white;
+}
+
+/* Bouton INSCRIPTION */
+.inscription-btn {
+    width: 50%;
+    padding: 12px;
+    background-color: #004d61;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 15px;
+}
+
+.inscription-btn:hover {
+    background-color: #002c38;
+    transform: scale(1.05);
+}
+
+/* ---- Ajout pour les images et les boutons FEMMES / HOMMES ---- */
+
+/* Conteneur principal */
+.categories {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+/* Style des blocs FEMMES et HOMMES */
+.category {
+    position: relative;
+    width: 40%;
+    border-radius: 50px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.category:hover {
+    transform: scale(1.05);
+}
+
+/* Images */
+.category img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* Boutons FEMMES et HOMMES */
+.category-btn {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #004d61;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.category-btn:hover {
+    background: #002c38;
+    transform: scale(1.1);
 }
