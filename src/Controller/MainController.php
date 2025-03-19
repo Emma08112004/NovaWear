@@ -37,6 +37,18 @@ class MainController extends AbstractController
     {
         return $this->render('main/paiement.html.twig');
     }
+    
+    #[Route('/femme', name: 'femme')]
+    public function femme(): Response
+    {
+        return $this->render('main/femme.html.twig');
+    }
+
+    #[Route('/homme', name: 'homme')]
+    public function homme(): Response
+    {
+        return $this->render('main/homme.html.twig');
+    }
 
     #[Route('/recapitulatif', name: 'recapitulatif')]
     public function recapitulatif(): Response

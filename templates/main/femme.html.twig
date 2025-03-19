@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mode Femme - NovaWear{% endblock %}
+
+{% block body %}
+    <div class="products-container">
+        <h1 class="text-center">Collection Femme</h1>
+
+        <!-- Ligne des blousons -->
+        <div class="products-row">
+            {% for produit in [
+                {'image': 'VesteBlazercintrée.png', 'nom': 'Veste Blazer cintrée', 'prix': '265€'},
+                {'image': 'Blousoneffetmouton.png', 'nom': 'Blouson effet mouton', 'prix': '225€'},
+                {'image': 'Vestecourtebouclee.png', 'nom': 'Veste courte bouclée', 'prix': '175€'},
+                {'image': 'Blousondemotardcourt.png', 'nom': 'Blouson de motard court', 'prix': '239€'}
+            ] %}
+                <div class="product-card">
+                    <img src="{{ asset('images/' ~ produit.image) }}" alt="{{ produit.nom }}">
+                    <p>{{ produit.nom }}</p>
+                    <div class="product-details">
+                        <select class="size-selector">
+                            <option>XS</option>
+                            <option>S</option>
+                            <option>M</option>
+                            <option>L</option>
+                            <option>XL</option>
+                        </select>
+                        <span>{{ produit.prix }}</span>
+                    </div>
+                    <div class="icons">
+                        <i class="fa-regular fa-heart heart-icon"></i>
+                        <i class="fa-solid fa-shopping-cart"></i>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Ligne des jeans -->
+        <div class="products-row">
+            {% for produit in [
+                {'image': 'JeanTailleHaute.png', 'nom': 'Jean Taille Haute', 'prix': '125€'},
+                {'image': 'JeanTailleCroisée.png', 'nom': 'Jean Taille Croisée', 'prix': '150€'},
+                {'image': 'JeanCoupeDroite.png', 'nom': 'Jean Coupe Droite', 'prix': '135€'},
+                {'image': 'JeanBaggy.png', 'nom': 'Jean Baggy', 'prix': '95€'}
+            ] %}
+                <div class="product-card">
+                    <img src="{{ asset('images/' ~ produit.image) }}" alt="{{ produit.nom }}">
+                    <p>{{ produit.nom }}</p>
+                    <div class="product-details">
+                        <select class="size-selector">
+                            <option>XS</option>
+                            <option>S</option>
+                            <option>M</option>
+                            <option>L</option>
+                            <option>XL</option>
+                        </select>
+                        <span>{{ produit.prix }}</span>
+                    </div>
+                    <div class="icons">
+                        <i class="fa-regular fa-heart heart-icon"></i>
+                        <i class="fa-solid fa-shopping-cart"></i>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.heart-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                this.classList.toggle('fa-solid');
+                this.classList.toggle('fa-regular');
+            });
+        });
+    </script>
+{% endblock %}
