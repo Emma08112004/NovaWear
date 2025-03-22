@@ -19,7 +19,7 @@ class Payment
     private ?Order $order = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?float $montant = null;
+    private ?string $montant = null;
 
     #[ORM\Column(length: 50)]
     private ?string $statut = null;

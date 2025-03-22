@@ -2,63 +2,75 @@
 
 namespace App\Entity;
 
-use App\Repository\BasketRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: BasketRepository::class)]
+#[ORM\Entity]
+#[ORM\Table(name: 'basket')]
 class Basket
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "baskets")]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    #[ORM\Column(type: 'integer')]
+    private int $productId;
 
-    #[ORM\ManyToOne(targetEntity: Product::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Product $product = null;
+    #[ORM\Column(type: 'integer')]
+    private int $userId;
 
-    #[ORM\Column]
-    private ?int $quantite = null;
+    #[ORM\Column(type: 'integer')]
+    private int $quantity;
+
+    #[ORM\Column(type: 'string', length: 10)]
+    private ?string $taille = null;
+
+    public function getTaille(): ?string
+    {
+        return $this->taille;
+    }
+
+    public function setTaille(string $taille): self
+    {
+        $this->taille = $taille;
+        return $this;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUser(): ?User
+    public function getProductId(): int
     {
-        return $this->user;
+        return $this->productId;
     }
 
-    public function setUser(?User $user): static
+    public function setProductId(int $productId): self
     {
-        $this->user = $user;
+        $this->productId = $productId;
         return $this;
     }
 
-    public function getProduct(): ?Product
+    public function getUserId(): int
     {
-        return $this->product;
+        return $this->userId;
     }
 
-    public function setProduct(?Product $product): static
+    public function setUserId(int $userId): self
     {
-        $this->product = $product;
+        $this->userId = $userId;
         return $this;
     }
 
-    public function getQuantite(): ?int
+    public function getQuantity(): int
     {
-        return $this->quantite;
+        return $this->quantity;
     }
 
-    public function setQuantite(int $quantite): static
+    public function setQuantity(int $quantity): self
     {
-        $this->quantite = $quantite;
+        $this->quantity = $quantity;
         return $this;
     }
 }

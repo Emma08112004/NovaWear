@@ -3,12 +3,46 @@
 {% block title %}Panier - NovaWear{% endblock %}
 
 {% block body %}
-    <h1>Votre Panier</h1>
-    <ul>
-        <li>Produit 1 - 30€</li>
-        <li>Produit 2 - 45€</li>
-        <li>Produit 3 - 20€</li>
-    </ul>
-    <p>Total : 95€</p>
-    <a href="{{ path('paiement') }}">Procéder au paiement</a>
+<div class="cart-container">
+    <h1 class="cart-title">Votre Panier</h1>
+
+    {% if panier|length > 0 %}
+        <div class="cart-items">
+            {% for item in panier %}
+                <div class="cart-item">
+                    <img src="{{ asset('images/' ~ item.product.imageUrl) }}" alt="{{ item.product.nomProduct }}">
+                    <div class="cart-details">
+                        <p class="cart-name">{{ item.product.nomProduct }}</p>
+                        <p class="cart-size">Taille : {{ item.taille }}</p>
+                        <p>{{ item.product.prixProduct }}€ (x{{ item.quantity }})</p>
+                    </div>
+                    <button class="delete-btn" data-id="{{ item.id }}" title="Supprimer">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <p class="cart-total">Total : {{ total }}€</p>
+        <a href="{{ path('paiement') }}" class="cart-checkout">PAIEMENT</a>
+    {% else %}
+        <p class="cart-empty">Votre panier est vide.</p>
+    {% endif %}
+</div>
+
+<script>
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            const itemId = button.dataset.id;
+
+            const response = await fetch(`/supprimer-panier/${itemId}`, {
+                method: 'POST',
+            });
+
+            const result = await response.json();
+            alert(result.message);
+            location.reload();
+        });
+    });
+</script>
 {% endblock %}

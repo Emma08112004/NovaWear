@@ -14,11 +14,11 @@ class Summary
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: "summarys")]
+    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: "summaries")]
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $order = null;
 
-    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: "summarys")]
+    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: "summaries")]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
@@ -26,7 +26,7 @@ class Summary
     private ?int $quantite = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?float $prixProduct = null;
+    private ?string $prixProduct = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateOrder = null;

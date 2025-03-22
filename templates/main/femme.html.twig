@@ -6,71 +6,77 @@
     <div class="products-container">
         <h1 class="text-center">Collection Femme</h1>
 
-        <!-- Ligne des blousons -->
         <div class="products-row">
-            {% for produit in [
-                {'image': 'VesteBlazercintrée.png', 'nom': 'Veste Blazer cintrée', 'prix': '265€'},
-                {'image': 'Blousoneffetmouton.png', 'nom': 'Blouson effet mouton', 'prix': '225€'},
-                {'image': 'Vestecourtebouclee.png', 'nom': 'Veste courte bouclée', 'prix': '175€'},
-                {'image': 'Blousondemotardcourt.png', 'nom': 'Blouson de motard court', 'prix': '239€'}
-            ] %}
+            {% for produit in produits %}
                 <div class="product-card">
-                    <img src="{{ asset('images/' ~ produit.image) }}" alt="{{ produit.nom }}">
-                    <p>{{ produit.nom }}</p>
-                    <div class="product-details">
-                        <select class="size-selector">
-                            <option>XS</option>
-                            <option>S</option>
-                            <option>M</option>
-                            <option>L</option>
-                            <option>XL</option>
-                        </select>
-                        <span>{{ produit.prix }}</span>
-                    </div>
-                    <div class="icons">
-                        <i class="fa-regular fa-heart heart-icon"></i>
-                        <i class="fa-solid fa-shopping-cart"></i>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+                    <form class="add-to-cart-form" data-product-id="{{ produit.id }}">
+                        <img src="{{ asset('images/' ~ produit.imageUrl) }}" alt="{{ produit.nomProduct }}">
+                        <p>{{ produit.nomProduct }}</p>
+                        <div class="product-footer">
+                        <span class="product-price">{{ produit.prixProduct }}€</span>
 
-        <!-- Ligne des jeans -->
-        <div class="products-row">
-            {% for produit in [
-                {'image': 'JeanTailleHaute.png', 'nom': 'Jean Taille Haute', 'prix': '125€'},
-                {'image': 'JeanTailleCroisée.png', 'nom': 'Jean Taille Croisée', 'prix': '150€'},
-                {'image': 'JeanCoupeDroite.png', 'nom': 'Jean Coupe Droite', 'prix': '135€'},
-                {'image': 'JeanBaggy.png', 'nom': 'Jean Baggy', 'prix': '95€'}
-            ] %}
-                <div class="product-card">
-                    <img src="{{ asset('images/' ~ produit.image) }}" alt="{{ produit.nom }}">
-                    <p>{{ produit.nom }}</p>
-                    <div class="product-details">
-                        <select class="size-selector">
-                            <option>XS</option>
-                            <option>S</option>
-                            <option>M</option>
-                            <option>L</option>
-                            <option>XL</option>
+                        <select name="taille" class="size-selector" required>
+                            <option value=""></option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
                         </select>
-                        <span>{{ produit.prix }}</span>
-                    </div>
-                    <div class="icons">
+
                         <i class="fa-regular fa-heart heart-icon"></i>
-                        <i class="fa-solid fa-shopping-cart"></i>
+
+                        <button type="submit" class="add-to-cart-btn">
+                            <i class="fa-solid fa-shopping-cart"></i>
+                        </button>
                     </div>
+                    </form>
                 </div>
             {% endfor %}
         </div>
     </div>
 
     <script>
-        document.querySelectorAll('.heart-icon').forEach(icon => {
-            icon.addEventListener('click', function() {
-                this.classList.toggle('fa-solid');
-                this.classList.toggle('fa-regular');
+        document.querySelectorAll('.add-to-cart-form').forEach(form => {
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const productId = this.dataset.productId;
+                const taille = this.querySelector('select[name="taille"]').value;
+
+                const response = await fetch(`/ajout-panier/${productId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `taille=${encodeURIComponent(taille)}`
+                });
+
+                const result = await response.json();
+                alert(result.message);
             });
         });
+
+        // Coeur toggle + ajout aux favoris
+    document.querySelectorAll('.heart-icon').forEach(icon => {
+    icon.addEventListener('click', async function () {
+        const form = this.closest('.add-to-cart-form');
+        const productId = form.dataset.productId;
+
+        // toggle visuel
+        this.classList.toggle('fa-solid');
+        this.classList.toggle('fa-regular');
+
+        // ajout en base
+            const response = await fetch(`/favoris/add/${productId}`, {
+    method: 'POST',
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest' // très important pour que Symfony comprenne la requête
+    }
+});
+
+const result = await response.json();
+alert(result.message);
+ // Affiche le message (succès ou erreur)
+        // ou alert si tu préfères
+        });
+    });
     </script>
 {% endblock %}

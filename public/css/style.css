@@ -303,7 +303,23 @@ h1 {
     margin-bottom: 40px;
 }
 
+.product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 0 5px;
+}
+
+.product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #004d61;
+}
+
 .size-selector {
+    font-size: 14px;
     padding: 5px;
     border-radius: 5px;
     border: 1px solid #004d61;
@@ -311,11 +327,159 @@ h1 {
     cursor: pointer;
 }
 
-/* Icônes panier et favoris */
-.icons {
+.heart-icon {
+    font-size: 18px;
+    color: #d63384;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+.heart-icon:hover {
+    color: #b61d6c;
+}
+
+.add-to-cart-btn {
+    border: 1px solid #ccc;
+    background-color: transparent;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
+}
+
+.add-to-cart-btn i {
+    font-size: 16px;
+    color: #004d61;
+}
+.size-selector {
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #004d61;
+    background: white;
+    cursor: pointer;
+}
+
+.product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #004d61;
+}
+/* ----- PAGE PANIER ----- */
+
+/* Page panier structurée comme la page produit */
+.product-details .taille {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #555;
+}
+
+.cart-total {
     font-size: 20px;
+    font-weight: bold;
+    margin-top: 30px;
+    color: #004d61;
+    text-align: center;
+}
+
+.cart-checkout {
+    display: inline-block;
+    margin: 20px auto;
+    background-color: #004d61;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s ease-in-out;
+}
+
+.cart-checkout:hover {
+    background-color: #002c38;
+}
+
+.cart-empty {
+    font-size: 18px;
+    color: #888;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.cart-item:hover {
+    transform: scale(1.03);
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #004d61;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-top: 10px;
+}
+
+.delete-btn:hover {
+    color: #a12060;
+}
+
+/* Style des articles dans le panier pour ressembler à la page produit */
+.cart-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.cart-item {
+    width: calc(25% - 20px); /* 4 articles par ligne max */
+    min-width: 200px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+}
+
+.cart-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.cart-name {
+    font-size: 17px;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0 5px;
+}
+
+.cart-size {
+    font-size: 14px;
+    color: #555;
+    margin: 0 0 5px;
+}
+
+.cart-details p {
+    margin: 5px 0;
+}
+
+/* Icône de suppression version panier */
+.delete-icon {
+    font-size: 20px;
+    color: #d63384;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+    margin-top: 1000px;
+    display: inline-block;
+}
+
+.delete-icon:hover {
+    color: #a12060;
 }

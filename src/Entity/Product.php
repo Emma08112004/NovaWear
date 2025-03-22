@@ -23,13 +23,16 @@ class Product
     private ?string $descriptionProduct = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?float $prixProduct = null;
+    private ?string $prixProduct = null;
 
     #[ORM\Column(length: 255)]
     private ?string $imageUrl = null;
 
     #[ORM\Column]
     private ?int $stockProduct = null;
+
+    #[ORM\Column(length: 10)]
+    private ?string $categorie = null;
 
     /**
      * @var Collection<int, Summary>
@@ -99,6 +102,17 @@ class Product
     public function setStockProduct(int $stockProduct): static
     {
         $this->stockProduct = $stockProduct;
+        return $this;
+    }
+
+    public function getCategorie(): ?string
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(string $categorie): static
+    {
+        $this->categorie = $categorie;
         return $this;
     }
 

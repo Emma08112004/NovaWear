@@ -16,7 +16,7 @@ class Order
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Orders')]
+    #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
@@ -32,7 +32,7 @@ class Order
     private ?string $statut = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?float $total = null;
+    private ?string $total = null;
 
     #[ORM\OneToOne(targetEntity: Payment::class, mappedBy: "order", cascade: ["persist", "remove"])]
     private ?Payment $payment = null;

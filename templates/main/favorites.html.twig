@@ -3,14 +3,48 @@
 {% block title %}Mes Favoris - NovaWear{% endblock %}
 
 {% block body %}
-    <h2>Mes Favoris</h2>
-    <ul>
-        {% for favori in favoris %}
-            <li>
-                {{ favori.product.name }} - {{ favori.product.price }}€
-            </li>
-        {% else %}
-            <p>Aucun favori enregistré.</p>
-        {% endfor %}
-    </ul>
+<div class="products-container">
+    <h1>Mes Favoris</h1>
+
+    {% if favorites|length > 0 %}
+        <div class="products-row">
+            {% for favori in favorites %}
+                <div class="product-card">
+                    <img src="{{ asset('images/' ~ favori.product.imageUrl) }}" alt="{{ favori.product.nomProduct }}">
+                    <p>{{ favori.product.nomProduct }}</p>
+                    <p>{{ favori.product.prixProduct }}€</p>
+
+                    <!-- Icône cœur rouge pour retirer -->
+                    <i class="fa-solid fa-heart heart-remove-icon" data-id="{{ favori.product.id }}" title="Retirer des favoris" style="color: #d63384; cursor: pointer;"></i>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="cart-empty">Aucun favori enregistré.</p>
+    {% endif %}
+</div>
+
+<!-- SCRIPT de suppression au clic sur le cœur -->
+<script>
+    document.querySelectorAll('.heart-remove-icon').forEach(icon => {
+        icon.addEventListener('click', async function () {
+            const productId = this.dataset.id;
+
+            const confirmation = confirm("Êtes-vous sûr(e) de vouloir supprimer cet article de vos favoris ?");
+
+            if (!confirmation) return; // Ne fait rien si l'utilisateur annule
+
+            const response = await fetch(`/favoris/remove/${productId}`, {
+                method: 'POST'
+            });
+
+            if (response.ok) {
+                location.reload(); // Recharge pour mettre à jour la liste
+            } else {
+                alert("Une erreur est survenue lors de la suppression.");
+            }
+        });
+    });
+</script>
+
 {% endblock %}
