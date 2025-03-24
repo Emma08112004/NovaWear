@@ -1,8 +1,11 @@
 <?php
+
 namespace App\Controller;
 
 use App\Repository\FavoritesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -25,63 +28,75 @@ class FavoritesController extends AbstractController
         ]);
     }
 
-    #[Route('/favoris/remove/{id}', name: 'remove_favori', methods: ['POST'])]
-public function removeFavori($id, EntityManagerInterface $em, ProductRepository $productRepo, Security $security): JsonResponse
+    #[Route('/remove/{id}', name: 'remove_favori', methods: ['POST'])]
+public function removeFavori($id, EntityManagerInterface $em, ProductRepository $productRepo): JsonResponse
 {
-    $user = $security->getUser();
-    $product = $productRepo->find($id);
-    if (!$user || !$product) {
-        return new JsonResponse(['success' => false, 'message' => 'Utilisateur ou produit introuvable.'], 404);
-    }
+    try {
+        $user = $this->getUser();
+        if (!$user) {
+            return new JsonResponse(['success' => false, 'message' => 'Utilisateur non connecté.'], 403);
+        }
 
-    $favori = $em->getRepository(Favorites::class)->findOneBy([
-        'user' => $user,
-        'product' => $product,
-    ]);
+        $product = $productRepo->find($id);
+        if (!$product) {
+            return new JsonResponse(['success' => false, 'message' => 'Produit introuvable.'], 404);
+        }
 
-    if ($favori) {
+        $favori = $em->getRepository(Favorites::class)->findOneBy([
+            'user' => $user,
+            'product' => $product,
+        ]);
+
+        if (!$favori) {
+            return new JsonResponse(['success' => false, 'message' => 'Favori non trouvé.'], 404);
+        }
+
         $em->remove($favori);
         $em->flush();
 
         return new JsonResponse(['success' => true, 'message' => 'Favori supprimé.']);
+    } catch (\Throwable $e) {
+        return new JsonResponse([
+            'success' => false,
+            'message' => 'Erreur serveur : ' . $e->getMessage(),
+        ], 500);
     }
-
-    return new JsonResponse(['success' => false, 'message' => 'Favori introuvable.'], 404);
 }
 
 
 
     #[Route('/add/{id}', name: 'add_favorite', methods: ['POST'])]
-#[IsGranted('ROLE_USER')]
-public function addFavorite(int $id, ProductRepository $productRepository, EntityManagerInterface $em): JsonResponse
-{
-    $user = $this->getUser();
+    #[IsGranted('ROLE_USER')]
+    public function addFavorite(int $id, ProductRepository $productRepository, EntityManagerInterface $em): JsonResponse
+    {
+        $user = $this->getUser();
 
-    if (!$user) {
-        return $this->json(['message' => 'Connexion requise'], 403);
+        if (!$user) {
+            return $this->json(['message' => 'Connexion requise'], 403);
+        }
+
+        $product = $productRepository->find($id);
+        if (!$product) {
+            return $this->json(['message' => 'Produit introuvable'], 404);
+        }
+
+        $existing = $em->getRepository(Favorites::class)->findOneBy([
+            'product' => $product,
+            'user' => $user,
+        ]);
+
+        if ($existing) {
+            return $this->json(['message' => 'Déjà dans les favoris'], 200);
+        }
+
+        $favori = new Favorites();
+        $favori->setUser($user);
+        $favori->setProduct($product);
+        $em->persist($favori);
+        $em->flush();
+
+        return $this->json(['message' => 'Ajouté aux favoris']);
     }
-
-    $product = $productRepository->find($id);
-    if (!$product) {
-        return $this->json(['message' => 'Produit introuvable'], 404);
-    }
-
-    $existing = $em->getRepository(Favorites::class)->findOneBy([
-        'product' => $product,
-        'user' => $user,
-    ]);
-
-    if ($existing) {
-        return $this->json(['message' => 'Déjà dans les favoris'], 200);
-    }
-
-    $favori = new Favorites();
-    $favori->setUser($user);
-    $favori->setProduct($product);
-    $em->persist($favori);
-    $em->flush();
-
-    return $this->json(['message' => 'Ajouté aux favoris']);
 }
 
-}
+
