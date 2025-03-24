@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
+#[ORM\Table(name: '`order`')]
 class Order
 {
     #[ORM\Id]
@@ -23,7 +24,16 @@ class Order
     #[ORM\ManyToOne(targetEntity: Product::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
+    public function getProduct(): ?Product
+    {
+    return $this->product;
+    }
 
+    public function setProduct(?Product $product): self
+    {
+    $this->product = $product;
+    return $this;
+    }
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateOrder = null;

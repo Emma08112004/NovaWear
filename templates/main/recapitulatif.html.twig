@@ -3,12 +3,42 @@
 {% block title %}Récapitulatif - NovaWear{% endblock %}
 
 {% block body %}
-    <h1>Récapitulatif de votre commande</h1>
-    <ul>
-        <li>Produit 1 - 30€</li>
-        <li>Produit 2 - 45€</li>
-        <li>Produit 3 - 20€</li>
-    </ul>
-    <p>Total : 95€</p>
-    <p>Merci pour votre achat !</p>
+    <h1 class="inscription-title">RÉCAPITULATIF</h1>
+
+    <div class="inscription-container">
+        <table style="width:100%; text-align:left;">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set totalGlobal = 0 %}
+                {% for ligne in summaries %}
+                    {% set ligneTotal = ligne.prixProduct * ligne.quantite %}
+                    {% set totalGlobal = totalGlobal + ligneTotal %}
+                    <tr>
+                        <td>{{ ligne.product.nomProduct }}</td>
+                        <td>{{ ligne.prixProduct }}€</td>
+                        <td>{{ ligne.quantite }}</td>
+                        <td>{{ ligneTotal }}€</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p style="font-weight: bold; margin-top: 20px;">Montant total : {{ totalGlobal }}€</p>
+
+        <div style="margin-top: 30px;">
+            <h3 style="color:#004d61;">Informations client</h3>
+            <p><strong>Nom :</strong> {{ user.nom }}</p>
+            <p><strong>Adresse :</strong> {{ user.adresse }}</p>
+            <p><strong>Email :</strong> {{ user.email }}</p>
+        </div>
+    </div>
+
+    <a class="cart-checkout" href="{{ path('home') }}">RETOURNER SUR LE SITE</a>
 {% endblock %}

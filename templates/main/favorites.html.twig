@@ -11,11 +11,29 @@
             {% for favori in favorites %}
                 <div class="product-card">
                     <img src="{{ asset('images/' ~ favori.product.imageUrl) }}" alt="{{ favori.product.nomProduct }}">
-                    <p>{{ favori.product.nomProduct }}</p>
+
+                    <p><strong>{{ favori.product.nomProduct }}</strong></p>
                     <p>{{ favori.product.prixProduct }}€</p>
 
-                    <!-- Icône cœur rouge pour retirer -->
-                    <i class="fa-solid fa-heart heart-remove-icon" data-id="{{ favori.product.id }}" title="Retirer des favoris" style="color: #d63384; cursor: pointer;"></i>
+                    <form class="add-to-cart-form" data-product-id="{{ favori.product.id }}">
+                        <select name="taille" class="size-selector">
+                            <option value="">Choisir la taille</option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+
+                        <div class="icons">
+                            <button type="submit" class="add-to-cart-btn">
+                                <i class="fa-solid fa-shopping-cart"></i>
+                            </button>
+
+                            <!-- Coeur pour retirer des favoris -->
+                            <i class="fa-solid fa-heart heart-remove-icon" data-id="{{ favori.product.id }}" title="Retirer des favoris"></i>
+                        </div>
+                    </form>
                 </div>
             {% endfor %}
         </div>
@@ -24,27 +42,70 @@
     {% endif %}
 </div>
 
-<!-- SCRIPT de suppression au clic sur le cœur -->
 <script>
+    // Ajout au panier depuis les favoris
+    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const productId = this.dataset.productId;
+            const taille = this.querySelector('select[name="taille"]').value;
+
+            if (!taille) {
+                alert('Veuillez choisir une taille.');
+                return;
+            }
+
+            // Requête pour ajouter au panier
+            const panierResponse = await fetch(`/ajout-panier/${productId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `taille=${encodeURIComponent(taille)}`
+            });
+
+            const panierResult = await panierResponse.json();
+
+            if (panierResult.success) {
+                // Ensuite, supprime des favoris
+                const favorisResponse = await fetch(`/favoris/remove/${productId}`, {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+
+                const favorisResult = await favorisResponse.json();
+
+                if (favorisResponse.ok && favorisResult.success) {
+                    alert('Article ajouté au panier et retiré des favoris !');
+                    this.closest('.product-card').remove();
+                } else {
+                    alert(favorisResult.message || "Erreur lors de la suppression des favoris.");
+                }
+
+            } else {
+                alert(panierResult.message || "Erreur lors de l'ajout au panier.");
+            }
+        });
+    });
+
+    // Suppression des favoris classique
     document.querySelectorAll('.heart-remove-icon').forEach(icon => {
         icon.addEventListener('click', async function () {
             const productId = this.dataset.id;
 
             const confirmation = confirm("Êtes-vous sûr(e) de vouloir supprimer cet article de vos favoris ?");
-
-            if (!confirmation) return; // Ne fait rien si l'utilisateur annule
+            if (!confirmation) return;
 
             const response = await fetch(`/favoris/remove/${productId}`, {
                 method: 'POST'
             });
 
             if (response.ok) {
-                location.reload(); // Recharge pour mettre à jour la liste
+                location.reload();
             } else {
                 alert("Une erreur est survenue lors de la suppression.");
             }
         });
     });
+     
 </script>
 
 {% endblock %}

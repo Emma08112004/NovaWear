@@ -25,19 +25,30 @@ class FavoritesController extends AbstractController
         ]);
     }
 
-    #[Route('/remove/{id}', name: 'remove_favorite')]
-    //#[IsGranted('ROLE_USER')]
-    public function removeFavorite(int $id, FavoritesRepository $favoritesRepository, EntityManagerInterface $entityManager): Response
-    {
-        $favorite = $favoritesRepository->findOneBy(['user' => $this->getUser(), 'product' => $id]);
-
-        if ($favorite) {
-            $entityManager->remove($favorite);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('favoris');
+    #[Route('/favoris/remove/{id}', name: 'remove_favori', methods: ['POST'])]
+public function removeFavori($id, EntityManagerInterface $em, ProductRepository $productRepo, Security $security): JsonResponse
+{
+    $user = $security->getUser();
+    $product = $productRepo->find($id);
+    if (!$user || !$product) {
+        return new JsonResponse(['success' => false, 'message' => 'Utilisateur ou produit introuvable.'], 404);
     }
+
+    $favori = $em->getRepository(Favorites::class)->findOneBy([
+        'user' => $user,
+        'product' => $product,
+    ]);
+
+    if ($favori) {
+        $em->remove($favori);
+        $em->flush();
+
+        return new JsonResponse(['success' => true, 'message' => 'Favori supprimé.']);
+    }
+
+    return new JsonResponse(['success' => false, 'message' => 'Favori introuvable.'], 404);
+}
+
 
 
     #[Route('/add/{id}', name: 'add_favorite', methods: ['POST'])]

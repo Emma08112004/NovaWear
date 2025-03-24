@@ -15,6 +15,7 @@ class PanierController extends AbstractController
     #[Route('/ajout-panier/{id}', name: 'ajout_panier', methods: ['POST'])]
 public function ajoutPanier(int $id, Request $request, ProductRepository $productRepository, EntityManagerInterface $em): JsonResponse
 {
+    
     $product = $productRepository->find($id);
     if (!$product) {
         return $this->json(['message' => 'Produit introuvable'], 404);
@@ -25,7 +26,12 @@ public function ajoutPanier(int $id, Request $request, ProductRepository $produc
         return $this->json(['message' => 'Veuillez sélectionner une taille avant d\'ajouter au panier'], 400);
     }
 
-    $userId = 1; // à adapter si connexion plus tard
+    $user = $this->getUser();
+    if (!$user) {
+        return $this->json(['message' => 'Connexion requise'], 403);
+    }
+
+    $userId = $user->getId(); // ✅ il manquait cette ligne
 
     // Cherche s'il existe déjà un article identique dans le panier
     $existingItem = $em->getRepository(Basket::class)->findOneBy([
@@ -49,6 +55,7 @@ public function ajoutPanier(int $id, Request $request, ProductRepository $produc
 
     return $this->json(['message' => 'Produit ajouté au panier']);
 }
+
 
 #[Route('/supprimer-panier/{id}', name: 'supprimer_panier', methods: ['POST'])]
 public function supprimerDuPanier(int $id, EntityManagerInterface $em): JsonResponse

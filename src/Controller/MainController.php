@@ -40,7 +40,10 @@ class MainController extends AbstractController
     #[Route('/panier', name: 'panier')]
 public function afficherPanier(EntityManagerInterface $em): Response
 {
-    $panier = $em->getRepository(Basket::class)->findAll();
+    $user = $this->getUser();
+    $panier = $em->getRepository(Basket::class)->findBy([
+    'userId' => $user->getId()
+]);
     $panierData = [];
     $total = 0;
 
@@ -62,11 +65,11 @@ public function afficherPanier(EntityManagerInterface $em): Response
     ]);
 }
 
-    #[Route('/paiement', name: 'paiement')]
-    public function paiement(): Response
-    {
-        return $this->render('main/paiement.html.twig');
-    }
+    ###[Route('/paiement', name: 'paiement')]
+    ##public function paiement(): Response
+    #{
+       # return $this->render('main/paiement.html.twig');
+    #}
     
     #[Route('/femme', name: 'femme')]
 public function femme(ProductRepository $productRepository): Response
@@ -87,9 +90,9 @@ public function homme(ProductRepository $productRepository): Response
 }
 
 
-    #[Route('/recapitulatif', name: 'recapitulatif')]
-    public function recapitulatif(): Response
-    {
-        return $this->render('main/recapitulatif.html.twig');
-    }
+    ##[Route('/recapitulatif', name: 'recapitulatif')]
+    ##public function recapitulatif(): Response
+    #{
+     #   return $this->render('main/recapitulatif.html.twig');
+    #}
 }

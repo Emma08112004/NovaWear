@@ -483,3 +483,26 @@ h1 {
 .delete-icon:hover {
     color: #a12060;
 }
+
+.payment-box {
+    background-color: #eaeaea;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #2c677c;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #245667;
+}
+
+
