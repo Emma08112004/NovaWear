@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Favoris - NovaWear{% endblock %}
+
+{% block body %}
+<div class="products-container">
+    <h1>Mes Favoris</h1>
+
+    {% if favorites|length > 0 %}
+        <div class="products-row">
+            {% for favori in favorites %}
+                <div class="product-card">
+                    <img src="{{ asset('images/' ~ favori.product.imageUrl) }}" alt="{{ favori.product.nomProduct }}">
+                    <p>{{ favori.product.nomProduct }}</p>
+                    <p>{{ favori.product.prixProduct }}€</p>
+
+                    <form class="add-to-cart-form" data-product-id="{{ favori.product.id }}">
+                        <select name="taille" class="size-selector">
+                            <option value=""></option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+
+                        <div class="icons">
+                            <button type="submit" class="add-to-cart-btn">
+                                <i class="fa-solid fa-shopping-cart"></i>
+                            </button>
+
+                            
+                            <i class="fa-solid fa-heart heart-remove-icon" data-id="{{ favori.product.id }}" title="Retirer des favoris"></i>
+                        </div>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="cart-empty">Aucun favori enregistré.</p>
+    {% endif %}
+</div>
+
+
+<script>
+
+    // Ajout au panier depuis les favoris
+    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const productId = this.dataset.productId;
+            const taille = this.querySelector('select[name="taille"]').value;
+
+            if (!taille) {
+                alert('Veuillez choisir une taille.');
+                return;
+            }
+
+            // Requête pour ajouter au panier
+            const panierResponse = await fetch(`/ajout-panier/${productId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `taille=${encodeURIComponent(taille)}`
+            });
+
+            const panierResult = await panierResponse.json();
+
+            if (panierResult.success) {
+                // Ensuite, supprime des favoris
+                const favorisResponse = await fetch(`/favoris/remove/${productId}`, {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+
+                const favorisResult = await favorisResponse.json();
+
+                if (favorisResponse.ok && favorisResult.success) {
+                    alert('Article ajouté au panier et retiré des favoris !');
+                    this.closest('.product-card').remove();
+                } else {
+                    alert(favorisResult.message || "Erreur lors de la suppression des favoris.");
+                }
+
+            } else {
+                alert(panierResult.message || "Erreur lors de l'ajout au panier.");
+            }
+        });
+    });
+
+    // Suppression des favoris classique
+    document.querySelectorAll('.heart-remove-icon').forEach(icon => {
+    icon.addEventListener('click', async function () {
+        const productId = this.dataset.id;
+        const confirmation = confirm("Êtes-vous sûr(e) de vouloir supprimer cet article de vos favoris ?");
+        if (!confirmation) return;
+
+        try {
+    const response = await fetch(`/favoris/remove/${productId}`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    });
+
+    const result = await response.json();
+    console.log("Résultat suppression :", result);
+
+    if (response.ok && result.success) {
+        location.reload();
+    } else {
+        alert(result.message || "Erreur lors de la suppression.");
+    }
+} catch (error) {
+    console.error("Erreur JS :", error);
+    alert("Une erreur inattendue est survenue.");
+}
+
+    });
+});
+
+
+</script>
+
+{% endblock %}

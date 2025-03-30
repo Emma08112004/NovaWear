@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement - NovaWear{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <div class="payment-box p-5 rounded text-center">
+
+            <h2 class="mb-4">Paiement sécurisé</h2>
+
+            <form action="{{ path('stripe_checkout') }}" method="POST">
+                <button type="submit" class="btn btn-success px-4 py-2">
+                    Payer avec Stripe
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+
+{% endblock %}

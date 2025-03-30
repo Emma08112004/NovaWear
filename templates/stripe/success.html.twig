@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement réussi - NovaWear{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="text-center">
+        <h2>Paiement réussi</h2>
+        <p class="text-success">Merci pour votre commande NovaWear !</p>
+    </div>
+
+    <hr>
+
+    <h4 class="mt-4 mb-3">Récapitulatif de votre commande :</h4>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Date de commande</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for summary in summaries %}
+                <tr>
+                    <td>{{ summary.product.nomProduct }}</td>
+                    <td>{{ summary.quantite }}</td>
+                    <td>{{ summary.prixProduct }} €</td>
+                    <td>{{ summary.dateOrder|date('d/m/Y H:i') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">Aucune commande trouvée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-center mt-4">
+        <a href="{{ path('home') }}" class="btn btn-primary">Retour à l'accueil</a>
+    </div>
+</div>
+{% endblock %}

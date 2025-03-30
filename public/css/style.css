@@ -154,3 +154,28 @@ button, .gender-button, .form-container button {
 button:hover, .gender-button:hover, .form-container button:hover {
     background-color: #444;
 }
+<<<<<<< Updated upstream
+=======
+
+
+
+.payment-box {
+    background-color: #f8f9fa;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+    
+.btn-nova {
+    background-color: #2c677c; /* bleu NovaWear */
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+    }
+    
+    .btn-nova:hover {
+    background-color: #245667;
+    }
+>>>>>>> Stashed changes

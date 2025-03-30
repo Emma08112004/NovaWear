@@ -102,7 +102,22 @@ class Product
         return $this;
     }
 
+<<<<<<< Updated upstream
     /**
+=======
+    public function getCategorie(): ?string
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(string $categorie): static
+    {
+        $this->categorie = $categorie;
+        return $this;
+    }
+
+    /*
+>>>>>>> Stashed changes
      * @return Collection<int, Summary>
      */
     public function getSummaries(): Collection

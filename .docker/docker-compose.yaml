@@ -43,6 +43,10 @@ services:
       context: ./php
       args:
         TIMEZONE: ${TIMEZONE}
+    environment:
+      STRIPE_SECRET_KEY: sk_test_51MAL4RAUPXVrhGlE6CIO9UuNOnvuHwZ5BDDCaK5pTB4Ijb0A2nftPGF5sdwaKJGWNCRAb9uSf11Uz0shx3kmajlW00KTWIr0qx
+      STRIPE_PUBLIC_KEY: pk_test_51MAL4RAUPXVrhGlE2uXcJSSoCRgZQdg6widOnPWEkrROym9MVMjFHzFEGivstfOoUAqaSjyU8F7oLeBQylK8IOTo00McnJeqcH
+      
     volumes:
       - ../:/var/www/novaWear:cached
     networks:

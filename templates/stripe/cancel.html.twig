@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement annulé - NovaWear{% endblock %}
+
+
+{% block body %}
+    <div class="container text-center mt-5">
+        <h1>Paiement annulé</h1>
+        <p>Votre paiement a été annulé. Vous pouvez réessayer à tout moment.</p>
+        <a href="{{ path('paiement') }}" class="btn btn-warning mt-3">Réessayer</a>
+    </div>
+{% endblock %}

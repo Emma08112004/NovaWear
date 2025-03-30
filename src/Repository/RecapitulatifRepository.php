@@ -15,29 +15,14 @@ class RecapitulatifRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Recapitulatif::class);
     }
+    public function findByUser($user)
+    {
+        return $this->createQueryBuilder('s')
+            ->join('s.order', 'o')
+            ->where('o.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    /**
-    //     * @return Recapitulatif[] Returns an array of Recapitulatif objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Recapitulatif
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }
