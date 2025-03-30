@@ -505,4 +505,58 @@ h1 {
     background-color: #245667;
 }
 
+/* --- Page Mes Commandes (historique) --- */
+.commandes-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
+}
 
+.commandes-title {
+    font-family: 'Jaro', sans-serif;
+    color: #004d61;
+    font-size: 36px;
+    margin-bottom: 25px;
+}
+
+.commande-card {
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-left: 6px solid #004d61;
+    transition: transform 0.3s ease-in-out;
+}
+
+.commande-card:hover {
+    transform: scale(1.02);
+}
+
+.commande-header {
+    font-weight: bold;
+    font-size: 18px;
+    color: #004d61;
+    margin-bottom: 15px;
+}
+
+.produit-ligne {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+.produit-ligne p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.produit-ligne p strong {
+    color: #004d61;
+}

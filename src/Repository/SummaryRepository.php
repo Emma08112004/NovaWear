@@ -40,4 +40,13 @@ class SummaryRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findByUser($user): array
+{
+    return $this->createQueryBuilder('s')
+        ->andWhere('s.user = :user')
+        ->setParameter('user', $user)
+        ->orderBy('s.dateOrder', 'DESC')
+        ->getQuery()
+        ->getResult();
+}
 }

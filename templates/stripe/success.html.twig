@@ -3,43 +3,100 @@
 {% block title %}Paiement réussi - NovaWear{% endblock %}
 
 {% block body %}
-<div class="container py-5">
-    <div class="text-center">
-        <h2>Paiement réussi</h2>
-        <p class="text-success">Merci pour votre commande NovaWear !</p>
-    </div>
+    <style>
+        .success-container {
+            width: 80%;
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 25px;
+            background-color: #f9f4ed;
+            box-shadow: 4px 4px 15px rgba(0,0,0,0.1);
+            font-family: 'Jaro', sans-serif;
+        }
 
-    <hr>
+        .success-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #004d61;
+            margin-bottom: 10px;
+            text-align: center;
+        }
 
-    <h4 class="mt-4 mb-3">Récapitulatif de votre commande :</h4>
+        .success-subtext {
+            color: #2c7c4f;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Produit</th>
-                <th>Quantité</th>
-                <th>Prix unitaire</th>
-                <th>Date de commande</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for summary in summaries %}
+        table.recap-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        table.recap-table th,
+        table.recap-table td {
+            border: 1px solid #ccc;
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        table.recap-table th {
+            background-color: #e0e0e0;
+            color: #004d61;
+        }
+
+        .recap-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #004d61;
+            color: white;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.3s ease;
+            text-align: center;
+        }
+
+        .recap-btn:hover {
+            background-color: #002c38;
+        }
+    </style>
+
+    <div class="success-container">
+        <h2 class="success-title">Paiement réussi</h2>
+        <p class="success-subtext">Merci pour votre commande NovaWear !</p>
+
+        <h3 style="margin-bottom: 20px;">Récapitulatif de votre commande :</h3>
+
+        <table class="recap-table">
+            <thead>
                 <tr>
-                    <td>{{ summary.product.nomProduct }}</td>
-                    <td>{{ summary.quantite }}</td>
-                    <td>{{ summary.prixProduct }} €</td>
-                    <td>{{ summary.dateOrder|date('d/m/Y H:i') }}</td>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Date de commande</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4" class="text-center">Aucune commande trouvée.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for summary in summaries %}
+                    <tr>
+                        <td>{{ summary.product.nomProduct }}</td>
+                        <td>{{ summary.quantite }}</td>
+                        <td>{{ summary.prixProduct }} €</td>
+                        <td>{{ summary.dateOrder|date('d/m/Y H:i') }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Aucune commande trouvée.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <div class="text-center mt-4">
-        <a href="{{ path('home') }}" class="btn btn-primary">Retour à l'accueil</a>
+        <div style="text-align: center;">
+            <a href="{{ path('home') }}" class="recap-btn">Retour à l'accueil</a>
+        </div>
     </div>
-</div>
 {% endblock %}

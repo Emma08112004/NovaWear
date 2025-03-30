@@ -40,11 +40,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: "user", targetEntity: Favorites::class, cascade: ["persist", "remove"])]
     private Collection $favorites;
 
+    #[ORM\OneToMany(mappedBy: "user", targetEntity: Summary::class, cascade: ["persist", "remove"])]
+    private Collection $summaries;
+
     public function __construct()
-    {
-        $this->orders = new ArrayCollection();
-        $this->favorites = new ArrayCollection();
-    }
+{
+    $this->orders = new ArrayCollection();
+    $this->favorites = new ArrayCollection();
+    $this->summaries = new ArrayCollection(); 
+}
 
     public function getId(): ?int
     {
@@ -190,4 +194,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return $this;
     }
+
+    /**
+ * @return Collection<int, Summary>
+ */
+public function getSummaries(): Collection
+{
+    return $this->summaries;
+}
+
+public function addSummary(Summary $summary): self
+{
+    if (!$this->summaries->contains($summary)) {
+        $this->summaries->add($summary);
+        $summary->setUser($this);
+    }
+    return $this;
+}
+
+public function removeSummary(Summary $summary): self
+{
+    if ($this->summaries->removeElement($summary)) {
+        if ($summary->getUser() === $this) {
+            $summary->setUser(null);
+        }
+    }
+    return $this;
+}
 }

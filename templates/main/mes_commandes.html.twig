@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Commandes - NovaWear{% endblock %}
+
+{% block body %}
+<div class="commandes-container">
+    <h2 class="commandes-title">Mes Commandes</h2>
+
+    {% if commandes|length > 0 %}
+        {% for commande in commandes %}
+            <div class="commande-card">
+                <div class="commande-header">
+                    Commande du {{ commande.date|date('d/m/Y à H:i') }}
+                </div>
+                {% for summary in commande.produits %}
+                    <div class="produit-ligne">
+                        <p><strong>Produit :</strong> {{ summary.product.nomProduct }}</p>
+                        <p><strong>Quantité :</strong> {{ summary.quantite }}</p>
+                        <p><strong>Prix unitaire :</strong> {{ summary.prixProduct }} €</p>
+                        <p><strong>Total :</strong> {{ summary.prixProduct * summary.quantite }} €</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="cart-empty">Aucune commande passée pour le moment.</p>
+    {% endif %}
+</div>
+
+<style>
+    .commandes-container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        font-family: 'Jaro', sans-serif;
+    }
+
+    .commandes-title {
+        font-size: 36px;
+        font-weight: bold;
+        color: #004d61;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .commande-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .commande-header {
+        font-size: 18px;
+        font-weight: bold;
+        color: #004d61;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 10px;
+    }
+
+    .produit-ligne {
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .produit-ligne:last-child {
+        border-bottom: none;
+    }
+
+    .produit-ligne p {
+        margin: 4px 0;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .produit-ligne p strong {
+        color: #004d61;
+    }
+
+    .cart-empty {
+        text-align: center;
+        font-size: 18px;
+        color: #888;
+        margin-top: 30px;
+    }
+</style>
+{% endblock %}

@@ -20,21 +20,7 @@ class Order
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
-
-    #[ORM\ManyToOne(targetEntity: Product::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Product $product = null;
-    public function getProduct(): ?Product
-    {
-    return $this->product;
-    }
-
-    public function setProduct(?Product $product): self
-    {
-    $this->product = $product;
-    return $this;
-    }
-
+   
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateOrder = null;
 

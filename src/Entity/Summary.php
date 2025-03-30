@@ -22,6 +22,10 @@ class Summary
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
+    #[ORM\ManyToOne(targetEntity: \App\Entity\User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?\App\Entity\User $user = null;
+
     #[ORM\Column]
     private ?int $quantite = null;
 
@@ -55,6 +59,17 @@ class Summary
     public function setProduct(?Product $product): static
     {
         $this->product = $product;
+        return $this;
+    }
+
+    public function getUser(): ?\App\Entity\User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?\App\Entity\User $user): static
+    {
+        $this->user = $user;
         return $this;
     }
 

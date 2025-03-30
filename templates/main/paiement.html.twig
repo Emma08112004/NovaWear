@@ -3,19 +3,50 @@
 {% block title %}Paiement - NovaWear{% endblock %}
 
 {% block body %}
-    <div class="container py-5">
-        <div class="payment-box p-5 rounded text-center">
+<style>
+    .paiement-container {
+        max-width: 600px;
+        margin: 60px auto;
+        padding: 50px;
+        border-radius: 25px;
+        background-color: #f9f4ed;
+        box-shadow: 4px 4px 15px rgba(0,0,0,0.1);
+        text-align: center;
+        font-family: 'Jaro', sans-serif;
+    }
 
-            <h2 class="mb-4">Paiement sécurisé</h2>
+    .paiement-title {
+        font-size: 32px;
+        font-weight: bold;
+        color: #004d61;
+        margin-bottom: 30px;
+    }
 
-            <form action="{{ path('stripe_checkout') }}" method="POST">
-                <button type="submit" class="btn btn-success px-4 py-2">
-                    Payer avec Stripe
-                </button>
-            </form>
+    .paiement-btn {
+        padding: 14px 35px;
+        font-size: 18px;
+        font-weight: bold;
+        background-color: #004d61;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+        cursor: pointer;
+    }
 
-        </div>
-    </div>
+    .paiement-btn:hover {
+        background-color: #004d61;
+        transform: scale(1.05);
+    }
+</style>
 
+<div class="paiement-container">
+    <h2 class="paiement-title">Paiement sécurisé</h2>
 
+    <form action="{{ path('stripe_checkout') }}" method="POST">
+        <button type="submit" class="paiement-btn">
+            Payer avec Stripe
+        </button>
+    </form>
+</div>
 {% endblock %}
