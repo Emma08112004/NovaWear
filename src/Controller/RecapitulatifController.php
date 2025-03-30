@@ -19,8 +19,7 @@ class RecapitulatifController extends AbstractController
             return $this->redirectToRoute('connexion');
         }
 
-        // Récupère la dernière commande du user
-        // Récupérer toutes les commandes du user faites à la dernière date de commande
+        
             $lastDate = $em->getRepository(Order::class)->createQueryBuilder('o')
             ->select('MAX(o.dateOrder)')
             ->where('o.user = :user')
