@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Paiement - NovaWear{% endblock %}
+{% block title %}Secure Payment - NovaWear{% endblock %}
 
 {% block body %}
 <style>
-    .paiement-container {
+    .payment-container {
         max-width: 600px;
         margin: 60px auto;
         padding: 50px;
@@ -15,14 +15,14 @@
         font-family: 'Jaro', sans-serif;
     }
 
-    .paiement-title {
+    .payment-title {
         font-size: 32px;
         font-weight: bold;
         color: #004d61;
         margin-bottom: 30px;
     }
 
-    .paiement-btn {
+    .payment-btn {
         padding: 14px 35px;
         font-size: 18px;
         font-weight: bold;
@@ -34,18 +34,18 @@
         cursor: pointer;
     }
 
-    .paiement-btn:hover {
+    .payment-btn:hover {
         background-color: #004d61;
         transform: scale(1.05);
     }
 </style>
 
-<div class="paiement-container">
-    <h2 class="paiement-title">Paiement sécurisé</h2>
+<div class="payment-container">
+    <h2 class="payment-title"> Paiement sécurisé </h2>
 
     <form action="{{ path('stripe_checkout') }}" method="POST">
-        <button type="submit" class="paiement-btn">
-            Payer avec Stripe
+        <button type="submit" class="payment-btn">
+            Pay with Stripe
         </button>
     </form>
 </div>

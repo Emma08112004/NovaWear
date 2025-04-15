@@ -18,8 +18,8 @@ security:
             lazy: true
             provider: app_user_provider
             form_login:
-                login_path: connexion
-                check_path: connexion
+                login_path: login
+                check_path: login
                 username_parameter: email
                 password_parameter: password
                 default_target_path: home
@@ -29,5 +29,5 @@ security:
 
     access_control:
         - { path: ^/favoris, roles: ROLE_USER }
-        - { path: ^/panier, roles: ROLE_USER }
+        - { path: ^/basket, roles: ROLE_USER }
         - { path: ^/, roles: PUBLIC_ACCESS }

@@ -116,8 +116,8 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, Summary>
+    /** 
+     * @return Collection<int,Summary>
      */
     public function getSummaries(): Collection
     {

@@ -35,15 +35,15 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 {% if app.user %}
-                                    <li><a class="dropdown-item" href="{{ path('mes_commandes') }}">Mes commandes</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('my_orders') }}">Mes commandes</a></li>
                                     <li>
                                         <form method="post" action="{{ path('logout') }}">
                                             <button type="submit" class="dropdown-item">Déconnexion</button>
                                         </form>
                                     </li>
                                 {% else %}
-                                    <li><a class="dropdown-item" href="{{ path('inscription') }}">Inscription</a></li>
-                                    <li><a class="dropdown-item" href="{{ path('connexion') }}">Connexion</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('register') }}">Inscription</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('login') }}">Connexion</a></li>
                                 {% endif %}
                             </ul>
                         </div>
@@ -53,8 +53,8 @@
                             <i class="fas fa-heart" style="color: #d63384;"></i>
                         </a>
 
-                        <!-- Panier -->
-                        <a class="nav-link" href="{{ path('panier') }}">
+                        <!-- Basket -->
+                        <a class="nav-link" href="{{ path('basket') }}">
                             <i class="fas fa-shopping-cart"></i>
                         </a>
                     </div>

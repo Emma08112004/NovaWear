@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Recapitulatif>
+ * @extends ServiceEntityRepository<Summary>
  */
 class SummaryRepository extends ServiceEntityRepository
 {
@@ -17,7 +17,7 @@ class SummaryRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return Recapitulatif[] Returns an array of Recapitulatif objects
+    //     * @return Summary[] Returns an array of Summary objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class SummaryRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Recapitulatif
+    //    public function findOneBySomeField($value): ?Summary
     //    {
     //        return $this->createQueryBuilder('r')
     //            ->andWhere('r.exampleField = :val')

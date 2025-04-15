@@ -14,7 +14,7 @@ class FavoritesRepository extends ServiceEntityRepository
     }
 
     /**
-     * Récupère tous les produits favoris d'un utilisateur donné.
+     * Récupère tous les products favoris d'un user donné.
      */
     public function findFavoritesByUser(User $user): array
     {

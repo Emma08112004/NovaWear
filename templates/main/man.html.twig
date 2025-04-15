@@ -1,35 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mode Femme - NovaWear{% endblock %}
+{% block title %}Mode Homme - NovaWear{% endblock %}
 
 {% block body %}
     <div class="products-container">
-        <h1 class="text-center">Collection Femme</h1>
+        <h1 class="text-center">Collection Homme</h1>
 
         <div class="products-row">
-            {% for produit in produits %}
+            {% for product in products %}
                 <div class="product-card">
-                    <form class="add-to-cart-form" data-product-id="{{ produit.id }}">
-                        <img src="{{ asset('images/' ~ produit.imageUrl) }}" alt="{{ produit.nomProduct }}">
-                        <p>{{ produit.nomProduct }}</p>
+                    <form class="add-to-cart-form" data-product-id="{{ product.id }}">
+                        <img src="{{ asset('images/' ~ product.imageUrl) }}" alt="{{ product.nomProduct }}">
+                        <p>{{ product.nomProduct }}</p>
                         <div class="product-footer">
-                        <span class="product-price">{{ produit.prixProduct }}€</span>
+                            <span class="product-price">{{ product.prixProduct }}€</span>
 
-                        <select name="taille" class="size-selector" required>
-                            <option value=""></option>
-                            <option value="XS">XS</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                        </select>
+                            <select name="taille" class="size-selector" required>
+                                <option value=""></option>
+                                <option value="XS">XS</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
 
-                        <i class="fa-regular fa-heart heart-icon"></i>
+                            <i class="fa-regular fa-heart heart-icon"></i>
 
-                        <button type="submit" class="add-to-cart-btn">
-                            <i class="fa-solid fa-shopping-cart"></i>
-                        </button>
-                    </div>
+                            <button type="submit" class="add-to-cart-btn">
+                                <i class="fa-solid fa-shopping-cart"></i>
+                            </button>
+                        </div>
                     </form>
                 </div>
             {% endfor %}
@@ -55,7 +55,7 @@
         });
 
         // Coeur toggle + ajout aux favoris
-    document.querySelectorAll('.heart-icon').forEach(icon => {
+        document.querySelectorAll('.heart-icon').forEach(icon => {
     icon.addEventListener('click', async function () {
         const form = this.closest('.add-to-cart-form');
         const productId = form.dataset.productId;
@@ -75,11 +75,11 @@
 const result = await response.json();
 alert(result.message);
  // Affiche le message (succès ou erreur)
-        // ou alert si tu préfères
-        });
+    
     });
+});
 
-    document.getElementById("searchInput").addEventListener("input", function () {
+document.getElementById("searchInput").addEventListener("input", function () {
         const query = this.value.toLowerCase();
         const cards = document.querySelectorAll(".product-card");
 
@@ -92,7 +92,5 @@ alert(result.message);
             }
         });
     });
-
-
     </script>
 {% endblock %}

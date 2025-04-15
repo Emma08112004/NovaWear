@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Panier;
+use App\Entity\Basket;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Panier>
  */
-class PanierRepository extends ServiceEntityRepository
+class BasketRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Panier::class);
+        parent::__construct($registry, Basket::class);
     }
 
     //    /**
-    //     * @return Panier[] Returns an array of Panier objects
+    //     * @return Basket[] Returns an array of Basket objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class PanierRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Panier
+    //    public function findOneBySomeField($value): ?Basket
     //    {
     //        return $this->createQueryBuilder('p')
     //            ->andWhere('p.exampleField = :val')

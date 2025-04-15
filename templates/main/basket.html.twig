@@ -24,7 +24,11 @@
         </div>
 
         <p class="cart-total">Total : {{ total }}€</p>
-        <a href="{{ path('paiement') }}" class="cart-checkout">PAIEMENT</a>
+
+        <form action="{{ path('stripe_checkout') }}" method="POST">
+            <button type="submit" class="cart-checkout">Paiement sécurisé</button>
+        </form>
+
     {% else %}
         <p class="cart-empty">Votre panier est vide.</p>
     {% endif %}
