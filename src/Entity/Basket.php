@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -25,17 +27,6 @@ class Basket
     #[ORM\Column(type: 'string', length: 10)]
     private ?string $taille = null;
 
-    public function getTaille(): ?string
-    {
-        return $this->taille;
-    }
-
-    public function setTaille(string $taille): self
-    {
-        $this->taille = $taille;
-        return $this;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -49,6 +40,7 @@ class Basket
     public function setProductId(int $productId): self
     {
         $this->productId = $productId;
+
         return $this;
     }
 
@@ -60,6 +52,7 @@ class Basket
     public function setUserId(int $userId): self
     {
         $this->userId = $userId;
+
         return $this;
     }
 
@@ -71,6 +64,19 @@ class Basket
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getTaille(): ?string
+    {
+        return $this->taille;
+    }
+
+    public function setTaille(string $taille): self
+    {
+        $this->taille = $taille;
+
         return $this;
     }
 }

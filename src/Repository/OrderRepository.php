@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Order;
@@ -15,6 +17,4 @@ class OrderRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Order::class);
     }
-
-    // Tu pourras ajouter des méthodes personnalisées ici plus tard si besoin
 }

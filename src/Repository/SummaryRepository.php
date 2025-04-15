@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Summary;
@@ -16,37 +18,41 @@ class SummaryRepository extends ServiceEntityRepository
         parent::__construct($registry, Summary::class);
     }
 
-    //    /**
-    //     * @return Summary[] Returns an array of Summary objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /*
+    // /**
+    //  * @return Summary[] Returns an array of Summary objects
+    //  */
+    // public function findByExampleField($value): array
+    // {
+    //     return $this->createQueryBuilder('r')
+    //         ->andWhere('r.exampleField = :val')
+    //         ->setParameter('val', $value)
+    //         ->orderBy('r.id', 'ASC')
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
 
-    //    public function findOneBySomeField($value): ?Summary
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    // public function findOneBySomeField($value): ?Summary
+    // {
+    //     return $this->createQueryBuilder('r')
+    //         ->andWhere('r.exampleField = :val')
+    //         ->setParameter('val', $value)
+    //         ->getQuery()
+    //         ->getOneOrNullResult();
+    // }
+
+    /**
+     * @param mixed $user
+     * @return Summary[]
+     */
     public function findByUser($user): array
-{
-    return $this->createQueryBuilder('s')
-        ->andWhere('s.user = :user')
-        ->setParameter('user', $user)
-        ->orderBy('s.dateOrder', 'DESC')
-        ->getQuery()
-        ->getResult();
-}
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('s.dateOrder', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

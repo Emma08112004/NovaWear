@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -34,21 +36,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private ?string $telephone = null;
 
-    #[ORM\OneToMany(mappedBy: "user", targetEntity: Order::class, cascade: ["persist", "remove"])]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class, cascade: ['persist', 'remove'])]
     private Collection $orders;
 
-    #[ORM\OneToMany(mappedBy: "user", targetEntity: Favorites::class, cascade: ["persist", "remove"])]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favorites::class, cascade: ['persist', 'remove'])]
     private Collection $favorites;
 
-    #[ORM\OneToMany(mappedBy: "user", targetEntity: Summary::class, cascade: ["persist", "remove"])]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Summary::class, cascade: ['persist', 'remove'])]
     private Collection $summaries;
 
     public function __construct()
-{
-    $this->orders = new ArrayCollection();
-    $this->favorites = new ArrayCollection();
-    $this->summaries = new ArrayCollection(); 
-}
+    {
+        $this->orders = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
+        $this->summaries = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -63,6 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
+
         return $this;
     }
 
@@ -74,6 +77,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
         return $this;
     }
 
@@ -85,6 +89,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -96,6 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setMotDePasse(string $motDePasse): self
     {
         $this->motDePasse = $motDePasse;
+
         return $this;
     }
 
@@ -107,6 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAdresse(?string $adresse): self
     {
         $this->adresse = $adresse;
+
         return $this;
     }
 
@@ -118,6 +125,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
+
         return $this;
     }
 
@@ -138,7 +146,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(): void
     {
-        // Effacer les données sensibles ici
+        // Effacer les données sensibles ici si nécessaire
     }
 
     /**
@@ -155,6 +163,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->orders->add($order);
             $order->setUser($this);
         }
+
         return $this;
     }
 
@@ -165,6 +174,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $order->setUser(null);
             }
         }
+
         return $this;
     }
 
@@ -182,6 +192,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->favorites->add($favorite);
             $favorite->setUser($this);
         }
+
         return $this;
     }
 
@@ -192,33 +203,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $favorite->setUser(null);
             }
         }
+
         return $this;
     }
 
     /**
- * @return Collection<int, Summary>
- */
-public function getSummaries(): Collection
-{
-    return $this->summaries;
-}
-
-public function addSummary(Summary $summary): self
-{
-    if (!$this->summaries->contains($summary)) {
-        $this->summaries->add($summary);
-        $summary->setUser($this);
+     * @return Collection<int, Summary>
+     */
+    public function getSummaries(): Collection
+    {
+        return $this->summaries;
     }
-    return $this;
-}
 
-public function removeSummary(Summary $summary): self
-{
-    if ($this->summaries->removeElement($summary)) {
-        if ($summary->getUser() === $this) {
-            $summary->setUser(null);
+    public function addSummary(Summary $summary): self
+    {
+        if (!$this->summaries->contains($summary)) {
+            $this->summaries->add($summary);
+            $summary->setUser($this);
         }
+
+        return $this;
     }
-    return $this;
-}
+
+    public function removeSummary(Summary $summary): self
+    {
+        if ($this->summaries->removeElement($summary)) {
+            if ($summary->getUser() === $this) {
+                $summary->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }

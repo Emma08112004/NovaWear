@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Repository\ProductRepository;
@@ -13,6 +15,7 @@ class ManController extends AbstractController
     public function index(ProductRepository $productRepository): Response
     {
         $products = $productRepository->findByCategorie('man');
+
         return $this->render('main/man.html.twig', [
             'products' => $products,
         ]);

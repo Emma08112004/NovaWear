@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Service\BasketService;
@@ -21,6 +23,7 @@ class BasketController extends AbstractController
     public function add(int $id, Request $request, BasketService $basketService): JsonResponse
     {
         $taille = $request->request->get('taille');
+
         return $basketService->handleAddToBasket($id, $taille, $this->getUser());
     }
 

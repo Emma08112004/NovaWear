@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\PaymentRepository;
@@ -14,7 +16,7 @@ class Payment
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(targetEntity: Order::class, inversedBy: "payment", cascade: ["persist", "remove"])]
+    #[ORM\OneToOne(targetEntity: Order::class, inversedBy: 'payment', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $order = null;
 
@@ -37,20 +39,22 @@ class Payment
         return $this->order;
     }
 
-    public function setOrder(?Order $order): static
+    public function setOrder(?Order $order): self
     {
         $this->order = $order;
+
         return $this;
     }
 
     public function getMontant(): ?float
     {
-        return $this->montant;
+        return $this->montant !== null ? (float) $this->montant : null;
     }
 
-    public function setMontant(float $montant): static
+    public function setMontant(float $montant): self
     {
-        $this->montant = $montant;
+        $this->montant = (string) $montant;
+
         return $this;
     }
 
@@ -59,9 +63,10 @@ class Payment
         return $this->statut;
     }
 
-    public function setStatut(string $statut): static
+    public function setStatut(string $statut): self
     {
         $this->statut = $statut;
+
         return $this;
     }
 
@@ -70,9 +75,10 @@ class Payment
         return $this->datePayment;
     }
 
-    public function setDatePayment(\DateTimeInterface $datePayment): static
+    public function setDatePayment(\DateTimeInterface $datePayment): self
     {
         $this->datePayment = $datePayment;
+
         return $this;
     }
 }

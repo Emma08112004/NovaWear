@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Service\RegisterService;
@@ -6,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\User;
 
 class RegisterController extends AbstractController
 {
@@ -14,7 +18,7 @@ class RegisterController extends AbstractController
     {
         $result = $registerService->handleRegistration($request);
 
-        if ($result instanceof \App\Entity\User) {
+        if ($result instanceof User) {
             return $this->redirectToRoute('login');
         }
 

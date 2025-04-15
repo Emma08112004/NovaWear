@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\Basket;
@@ -25,16 +27,19 @@ class StripeService extends AbstractController
 
     public function createCheckoutSession($user): Response
     {
+        if (!$user) {
+            return $this->redirectToRoute('login');
+        }
+
         Stripe::setApiKey($_SERVER['STRIPE_SECRET_KEY']);
+        $request = $this->requestStack->getCurrentRequest();
+        $domain = $request->getSchemeAndHttpHost();
 
         $panier = $this->em->getRepository(Basket::class)->findBy(['userId' => $user->getId()]);
         if (count($panier) === 0) {
             $this->addFlash('error', 'Votre panier est vide.');
             return $this->redirectToRoute('basket');
         }
-
-        $request = $this->requestStack->getCurrentRequest();
-        $domain = $request->getSchemeAndHttpHost();
 
         $lineItems = [];
         foreach ($panier as $item) {
@@ -45,7 +50,7 @@ class StripeService extends AbstractController
                 'price_data' => [
                     'currency' => 'eur',
                     'product_data' => ['name' => $product->getNomProduct()],
-                    'unit_amount' => $product->getPrixProduct() * 100,
+                    'unit_amount' => (int)($product->getPrixProduct() * 100),
                 ],
                 'quantity' => $item->getQuantity(),
             ];
@@ -64,6 +69,10 @@ class StripeService extends AbstractController
 
     public function handleSuccess($user): Response
     {
+        if (!$user) {
+            return $this->redirectToRoute('login');
+        }
+
         $panier = $this->em->getRepository(Basket::class)->findBy(['userId' => $user->getId()]);
         if (count($panier) === 0) {
             $this->addFlash('error', 'Votre panier est vide.');
@@ -76,8 +85,8 @@ class StripeService extends AbstractController
             ->setStatut('payé');
 
         $this->em->persist($order);
-
         $totalGlobal = 0;
+
         foreach ($panier as $item) {
             $product = $this->em->getRepository(Product::class)->find($item->getProductId());
             if (!$product) continue;
@@ -87,30 +96,31 @@ class StripeService extends AbstractController
                 ->setProduct($product)
                 ->setUser($user)
                 ->setQuantite($item->getQuantity())
-                ->setPrixProduct($product->getPrixProduct())
+                ->setPrixProduct((float)$product->getPrixProduct())
                 ->setDateOrder(new \DateTime());
 
             $order->addSummary($summary);
             $this->em->persist($summary);
             $this->em->remove($item);
+
             $totalGlobal += $product->getPrixProduct() * $item->getQuantity();
         }
 
         $payment = (new Payment())
             ->setOrder($order)
-            ->setMontant($totalGlobal)
+            ->setMontant((float)$totalGlobal)
             ->setStatut('effectué')
             ->setDatePayment(new \DateTime());
 
         $this->em->persist($payment);
-        $order->setTotal($totalGlobal);
+        $order->setTotal((float)$totalGlobal);
         $this->em->flush();
 
         $summaries = $this->em->getRepository(Summary::class)->findBy(['order' => $order]);
 
         return $this->render('main/Summary.html.twig', [
             'summaries' => $summaries,
-            'user' => $user
+            'user' => $user,
         ]);
     }
 }

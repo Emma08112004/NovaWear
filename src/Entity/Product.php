@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
@@ -55,9 +57,10 @@ class Product
         return $this->nomProduct;
     }
 
-    public function setNomProduct(string $nomProduct): static
+    public function setNomProduct(string $nomProduct): self
     {
         $this->nomProduct = $nomProduct;
+
         return $this;
     }
 
@@ -66,20 +69,22 @@ class Product
         return $this->descriptionProduct;
     }
 
-    public function setDescriptionProduct(string $descriptionProduct): static
+    public function setDescriptionProduct(string $descriptionProduct): self
     {
         $this->descriptionProduct = $descriptionProduct;
+
         return $this;
     }
 
     public function getPrixProduct(): ?float
     {
-        return $this->prixProduct;
+        return $this->prixProduct !== null ? (float) $this->prixProduct : null;
     }
 
-    public function setPrixProduct(float $prixProduct): static
+    public function setPrixProduct(float $prixProduct): self
     {
         $this->prixProduct = $prixProduct;
+
         return $this;
     }
 
@@ -88,9 +93,10 @@ class Product
         return $this->imageUrl;
     }
 
-    public function setImageUrl(string $imageUrl): static
+    public function setImageUrl(string $imageUrl): self
     {
         $this->imageUrl = $imageUrl;
+
         return $this;
     }
 
@@ -99,9 +105,10 @@ class Product
         return $this->stockProduct;
     }
 
-    public function setStockProduct(int $stockProduct): static
+    public function setStockProduct(int $stockProduct): self
     {
         $this->stockProduct = $stockProduct;
+
         return $this;
     }
 
@@ -110,36 +117,39 @@ class Product
         return $this->categorie;
     }
 
-    public function setCategorie(string $categorie): static
+    public function setCategorie(string $categorie): self
     {
         $this->categorie = $categorie;
+
         return $this;
     }
 
-    /** 
-     * @return Collection<int,Summary>
+    /**
+     * @return Collection<int, Summary>
      */
     public function getSummaries(): Collection
     {
         return $this->summaries;
     }
 
-    public function addSummary(Summary $summary): static
+    public function addSummary(Summary $summary): self
     {
         if (!$this->summaries->contains($summary)) {
             $this->summaries->add($summary);
             $summary->setProduct($this);
         }
+
         return $this;
     }
 
-    public function removeSummary(Summary $summary): static
+    public function removeSummary(Summary $summary): self
     {
         if ($this->summaries->removeElement($summary)) {
             if ($summary->getProduct() === $this) {
                 $summary->setProduct(null);
             }
         }
+
         return $this;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\Basket;
@@ -14,11 +16,13 @@ class BasketService extends AbstractController
     public function __construct(
         private ProductRepository $productRepository,
         private EntityManagerInterface $em
-    ) {}
+    ) {
+    }
 
     public function handleAddToBasket(int $productId, ?string $taille, $user): JsonResponse
     {
         $product = $this->productRepository->find($productId);
+
         if (!$product) {
             return new JsonResponse(['message' => 'Produit introuvable'], 404);
         }
@@ -58,6 +62,7 @@ class BasketService extends AbstractController
     public function removeFromBasket(int $id): JsonResponse
     {
         $item = $this->em->getRepository(Basket::class)->find($id);
+
         if (!$item) {
             return new JsonResponse(['message' => 'Article non trouvé'], 404);
         }
@@ -79,21 +84,23 @@ class BasketService extends AbstractController
 
         foreach ($panier as $item) {
             $product = $this->productRepository->find($item->getProductId());
-            if (!$product) continue;
+            if (!$product) {
+                continue;
+            }
 
             $total += $product->getPrixProduct() * $item->getQuantity();
 
             $panierData[] = [
-                'id' => $item->getId(), 
+                'id' => $item->getId(),
                 'product' => $product,
                 'quantity' => $item->getQuantity(),
-                'taille' => $item->getTaille()
+                'taille' => $item->getTaille(),
             ];
         }
 
         return $this->render('main/basket.html.twig', [
             'panier' => $panierData,
-            'total' => $total
+            'total' => $total,
         ]);
     }
 }

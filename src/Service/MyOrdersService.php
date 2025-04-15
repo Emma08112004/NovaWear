@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Repository\SummaryRepository;
@@ -7,7 +9,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class MyOrdersService
 {
-    public function __construct(private SummaryRepository $summaryRepository) {}
+    public function __construct(
+        private SummaryRepository $summaryRepository
+    ) {
+    }
 
     public function getOrdersGroupedByCommand(UserInterface $user): array
     {
@@ -21,7 +26,7 @@ class MyOrdersService
             if (!isset($orders[$orderId])) {
                 $orders[$orderId] = [
                     'date' => $order->getDateOrder(),
-                    'products' => []
+                    'products' => [],
                 ];
             }
 

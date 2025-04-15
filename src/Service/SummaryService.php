@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\Order;
@@ -13,7 +15,8 @@ class SummaryService extends AbstractController
     public function __construct(
         private EntityManagerInterface $em,
         private SummaryRepository $summaryRepository
-    ) {}
+    ) {
+    }
 
     public function renderSummaryForUser($user): Response
     {
@@ -31,6 +34,7 @@ class SummaryService extends AbstractController
 
         if (!$lastDate) {
             $this->addFlash('error', 'Aucune commande trouvée.');
+
             return $this->redirectToRoute('home');
         }
 
@@ -53,7 +57,7 @@ class SummaryService extends AbstractController
         return $this->render('main/summary.html.twig', [
             'summaries' => $summaries,
             'order' => $lastOrder,
-            'user' => $user
+            'user' => $user,
         ]);
     }
 }

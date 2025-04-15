@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
@@ -20,7 +22,7 @@ class Order
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
-   
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateOrder = null;
 
@@ -30,10 +32,10 @@ class Order
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $total = null;
 
-    #[ORM\OneToOne(targetEntity: Payment::class, mappedBy: "order", cascade: ["persist", "remove"])]
+    #[ORM\OneToOne(targetEntity: Payment::class, mappedBy: 'order', cascade: ['persist', 'remove'])]
     private ?Payment $payment = null;
 
-    #[ORM\OneToMany(targetEntity: Summary::class, mappedBy: "order", cascade: ["persist", "remove"])]
+    #[ORM\OneToMany(targetEntity: Summary::class, mappedBy: 'order', cascade: ['persist', 'remove'])]
     private Collection $summaries;
 
     public function __construct()
@@ -51,7 +53,7 @@ class Order
         return $this->user;
     }
 
-    public function setUser(?User $user): static
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
@@ -63,7 +65,7 @@ class Order
         return $this->dateOrder;
     }
 
-    public function setDateOrder(\DateTimeInterface $dateOrder): static
+    public function setDateOrder(\DateTimeInterface $dateOrder): self
     {
         $this->dateOrder = $dateOrder;
 
@@ -75,7 +77,7 @@ class Order
         return $this->statut;
     }
 
-    public function setStatut(string $statut): static
+    public function setStatut(string $statut): self
     {
         $this->statut = $statut;
 
@@ -84,14 +86,14 @@ class Order
 
     public function getTotal(): ?float
     {
-        return $this->total;
+        return $this-> total !== null ? (float) $this->total : null;
     }
 
-    public function setTotal(float $total): static
+    public function setTotal(float $total): self
     {
-        $this->total = $total;
+        $this->total = (string) $total;
 
-        return $this;
+    return $this;
     }
 
     public function getPayment(): ?Payment
@@ -99,9 +101,10 @@ class Order
         return $this->payment;
     }
 
-    public function setPayment(?Payment $payment): static
+    public function setPayment(?Payment $payment): self
     {
         $this->payment = $payment;
+
         return $this;
     }
 
@@ -110,22 +113,24 @@ class Order
         return $this->summaries;
     }
 
-    public function addSummary(Summary $summary): static
+    public function addSummary(Summary $summary): self
     {
         if (!$this->summaries->contains($summary)) {
             $this->summaries->add($summary);
             $summary->setOrder($this);
         }
+
         return $this;
     }
 
-    public function removeSummary(Summary $summary): static
+    public function removeSummary(Summary $summary): self
     {
         if ($this->summaries->removeElement($summary)) {
             if ($summary->getOrder() === $this) {
                 $summary->setOrder(null);
             }
         }
+
         return $this;
     }
 }

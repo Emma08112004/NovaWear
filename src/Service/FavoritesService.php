@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\Favorites;
@@ -13,7 +15,8 @@ class FavoritesService
     public function __construct(
         private EntityManagerInterface $em,
         private ProductRepository $productRepo
-    ) {}
+    ) {
+    }
 
     public function addToFavorites(int $id, ?UserInterface $user): JsonResponse
     {
@@ -22,6 +25,7 @@ class FavoritesService
         }
 
         $product = $this->productRepo->find($id);
+
         if (!$product) {
             return new JsonResponse(['message' => 'Produit introuvable'], 404);
         }
@@ -38,6 +42,7 @@ class FavoritesService
         $favori = new Favorites();
         $favori->setUser($user);
         $favori->setProduct($product);
+
         $this->em->persist($favori);
         $this->em->flush();
 
@@ -51,6 +56,7 @@ class FavoritesService
         }
 
         $product = $this->productRepo->find($id);
+
         if (!$product) {
             return new JsonResponse(['success' => false, 'message' => 'Produit introuvable.'], 404);
         }

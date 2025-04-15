@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Favorites;
@@ -14,7 +17,8 @@ class FavoritesRepository extends ServiceEntityRepository
     }
 
     /**
-     * Récupère tous les products favoris d'un user donné.
+     * @param User $user
+     * @return Favorites[]
      */
     public function findFavoritesByUser(User $user): array
     {

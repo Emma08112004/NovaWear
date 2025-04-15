@@ -1,15 +1,16 @@
 <?php
-// src/Service/RegisterService.php
+
+declare(strict_types=1);
 
 namespace App\Service;
 
 use App\Entity\User;
+use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use App\Form\RegistrationFormType;
 
 class RegisterService
 {
@@ -17,7 +18,8 @@ class RegisterService
         private EntityManagerInterface $em,
         private UserPasswordHasherInterface $passwordHasher,
         private FormFactoryInterface $formFactory
-    ) {}
+    ) {
+    }
 
     public function handleRegistration(Request $request): FormInterface|User
     {
@@ -26,7 +28,11 @@ class RegisterService
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $hashedPassword = $this->passwordHasher->hashPassword($user, $user->getMotDePasse());
+            $hashedPassword = $this->passwordHasher->hashPassword(
+                $user,
+                $user->getMotDePasse()
+            );
+
             $user->setMotDePasse($hashedPassword);
 
             $this->em->persist($user);

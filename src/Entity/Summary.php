@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\SummaryRepository;
@@ -14,11 +16,11 @@ class Summary
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: "summaries")]
+    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'summaries')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $order = null;
 
-    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: "summaries")]
+    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'summaries')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
@@ -45,9 +47,10 @@ class Summary
         return $this->order;
     }
 
-    public function setOrder(?Order $order): static
+    public function setOrder(?Order $order): self
     {
         $this->order = $order;
+
         return $this;
     }
 
@@ -56,9 +59,10 @@ class Summary
         return $this->product;
     }
 
-    public function setProduct(?Product $product): static
+    public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
         return $this;
     }
 
@@ -67,9 +71,10 @@ class Summary
         return $this->user;
     }
 
-    public function setUser(?\App\Entity\User $user): static
+    public function setUser(?\App\Entity\User $user): self
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -78,20 +83,22 @@ class Summary
         return $this->quantite;
     }
 
-    public function setQuantite(int $quantite): static
+    public function setQuantite(int $quantite): self
     {
         $this->quantite = $quantite;
+
         return $this;
     }
 
     public function getPrixProduct(): ?float
     {
-        return $this->prixProduct;
+        return $this->prixProduct !== null ? (float) $this->prixProduct : null;
     }
 
-    public function setPrixProduct(float $prixProduct): static
+    public function setPrixProduct(float $prixProduct): self
     {
-        $this->prixProduct = $prixProduct;
+        $this->prixProduct = (string) $prixProduct;
+
         return $this;
     }
 
@@ -100,9 +107,10 @@ class Summary
         return $this->dateOrder;
     }
 
-    public function setDateOrder(\DateTimeInterface $dateOrder): static
+    public function setDateOrder(\DateTimeInterface $dateOrder): self
     {
         $this->dateOrder = $dateOrder;
+
         return $this;
     }
 }
