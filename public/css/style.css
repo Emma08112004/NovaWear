@@ -577,3 +577,101 @@ h1 {
     background-color: #500c16;
     color: #fff;
 }
+
+.payment-container {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 50px;
+    border-radius: 25px;
+    background-color: #f9f4ed;
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    font-family: 'Jaro', sans-serif;
+}
+
+.payment-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #004d61;
+    margin-bottom: 30px;
+}
+
+.payment-btn {
+    padding: 14px 35px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #004d61;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.payment-btn:hover {
+    background-color: #004d61;
+    transform: scale(1.05);
+}
+
+.orders-container {
+    border: 2px solid red; /* test temporaire */
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Jaro', sans-serif;
+}
+
+.orders-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #004d61;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.commande-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
+    font-size: 14px;
+    line-height: 1.4;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.commande-header {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #004d61;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 6px;
+}
+
+.product-ligne {
+    font-size: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.product-ligne:last-child {
+    border-bottom: none;
+}
+
+.product-ligne p {
+    margin: 2px 0;
+    color: #333;
+    font-size: 14px;
+}
+.product-ligne p strong {
+    color: #004d61;
+}
+
+.cart-empty {
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+    margin-top: 30px;
+}
