@@ -62,13 +62,13 @@ Le projet a été mené en méthode agile avec un fonctionnement Scrum hebdomada
 ```bash
 git clone https://github.com/Emma08112004/NovaWear.git
 cd NovaWear
-
+```
 
 2. **Lancer les conteneurs Docker**
 
 ```bash
 docker compose up -d
-
+```
 3. **Accéder à l'application
 ```bash
 http://novawear.local
