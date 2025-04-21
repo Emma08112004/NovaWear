@@ -50,6 +50,10 @@ Le projet a été mené en méthode agile avec un fonctionnement Scrum hebdomada
 > Le diagramme de classe de la base de données :
 > Il présente les relations entre les entités `User`, `Product`, `Order`, `Summary`, `Basket`, `Favorites`, `Payment`.
 
+![WhatsApp Image 2025-04-21 à 14 21 39_b4d61f93](https://github.com/user-attachments/assets/51dbdb57-1291-41b7-bc44-d462d54a67b7)
+
+
+[DiagClasse.pdf](https://github.com/user-attachments/files/19833924/DiagClasse.pdf)
 
 
 ---
