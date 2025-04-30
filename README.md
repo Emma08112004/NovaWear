@@ -55,6 +55,13 @@ Le projet a été mené en méthode agile avec un fonctionnement Scrum hebdomada
 
 [DiagClasse.pdf](https://github.com/user-attachments/files/19833924/DiagClasse.pdf)
 
+---
+
+##  Concernant notre code
+
+> - Comme nous avons pu vous l'expliquer en cours, nous avons rencontré de nombreux problèmes avec nos machines. Par conséquent, le dernier commit à prendre en compte ne se trouve pas dans la branche Main mais dans la branche dev
+>   
+> - Par ailleurs, comme nous avon pu vous le préciser en classe, en raison de ces problèmes techniques, tous les membres du groupe n'ont pas pu pousser leur code individuellement. Nous avons tous travaillé via Live Share, une extension qui nous permettait de coder en simultané à partir d’un seul et même ordinateur, le seul qui fonctionnait correctement.
 
 ---
 
@@ -76,3 +83,5 @@ docker compose up -d
 3. **Accéder à l'application
 ```bash
 http://novawear.local
+
+
